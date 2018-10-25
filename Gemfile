@@ -18,6 +18,11 @@ group :development do
 gem 'sqlite3'
 end
 
+group :development, :test do
+   gem 'rspec-rails', '~> 3.0'
+   gem 'rails-controller-testing'
+ end
+ #gems to the :development and :test groups because we want their tasks and generators to be available in both environments
 
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
