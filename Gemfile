@@ -16,6 +16,8 @@ group :production do
 
 group :development do
 gem 'sqlite3'
+gem 'pry-rails'
+
 end
 
 group :development, :test do
@@ -67,7 +69,7 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
  gem 'bootstrap-sass'
- 
+
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
