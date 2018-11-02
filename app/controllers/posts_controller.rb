@@ -1,0 +1,21 @@
+class PostsController < ApplicationController
+  def index
+
+    # #11
+    @posts = Post.all
+
+  end
+
+  def show
+  end
+
+  def new
+  end
+
+  def edit
+  end
+end
+
+
+#At #11, we declare an instance variable @posts and assign it a collection of
+#Post objects using the all method provided by ActiveRecord. all returns a collection of Post objects.
