@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  
+  resources :advertisements
+
+  # get 'advertisements/index'
+  # get 'advertisements/show'
+  # get 'advertisements/new'
+  # get 'advertisements/create'
   #get 'posts/index'
 #  get 'posts/show'
 #  get 'posts/new'
@@ -16,7 +23,7 @@ resources :posts
   get 'welcome/faq'
   root 'welcome#index'
 
-  
+
 end
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
