@@ -1,15 +1,12 @@
 Rails.application.routes.draw do
-  
+
   resources :advertisements
 
-  # get 'advertisements/index'
-  # get 'advertisements/show'
-  # get 'advertisements/new'
-  # get 'advertisements/create'
-  #get 'posts/index'
-#  get 'posts/show'
-#  get 'posts/new'
-  # get 'posts/edit'
+  get 'advertisements/index'
+  get 'advertisements/show'
+  get 'advertisements/new'
+  get 'advertisements/create'
+
 
   # #1
 resources :posts
