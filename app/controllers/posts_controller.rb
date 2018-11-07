@@ -39,8 +39,39 @@ class PostsController < ApplicationController
          render :new
        end
      end
+     def update
+          @post = Post.find(params[:id])
+          @post.title = params[:post][:title]
+          @post.body = params[:post][:body]
+
+          if @post.save
+            flash[:notice] = "Post was updated."
+            redirect_to @post
+          else
+            flash.now[:alert] = "There was an error saving the post. Please try again."
+            render :edit
+          end
+        end
+
+
+
+        def destroy
+     @post = Post.find(params[:id])
+
+ # #8
+     if @post.destroy
+       flash[:notice] = "\"#{@post.title}\" was deleted successfully."
+       redirect_to posts_path
+     else
+       flash.now[:alert] = "There was an error deleting the post."
+       render :show
+     end
+   end
+
+
 
   def edit
+     @post = Post.find(params[:id])
   end
 end
 
@@ -60,6 +91,14 @@ end
 #When the user clicks Save, the create method is called. create either updates the database with the save method,
 # or returns an error. Unlike new, create does not have a corresponding view. create works behind the scenes to collect
 #the data submitted by the user and update the database. create is a POST action.
+
+
+
+
+#At #8, we call destroy on @post. If that call is successful, we set a flash message and redirect the user
+# to the posts index view. If destroy fails then we redirect the user to the show view using render :show.
+
+
 
 #At #19, we find the post that corresponds to the id in the params that was passed to  show and assign it
 #to @post. Unlike in the index method, in the show method, we populate an instance variable with a single post,

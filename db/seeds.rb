@@ -36,6 +36,15 @@ end
   )
 end
 
+100.times do
+  Question2.create!(
+    title: RandomData.random_sentence,
+    body:  RandomData.random_paragraph,
+    resolved: false
+  )
+end
+
+
 
 puts "#{Post.count}"
 Post.find_or_create_by(title: "Only this title", body: "Only this body")
@@ -46,6 +55,7 @@ puts "Seed finished"
 puts "#{Post.count} posts created"
 puts "#{Comment.count} comments created"
 puts "#{Advertisement.count} advertisements created"
+puts "#{Question2.count} question2 created"
 
 
 
