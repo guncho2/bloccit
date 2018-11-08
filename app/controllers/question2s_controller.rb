@@ -50,7 +50,7 @@ flash[:error] = "There was an error saving the post. Please try again."
 # #8
 if @question2.destroy
   flash[:notice] = "\"#{@question2.title}\" was deleted successfully."
-  redirect_to question2_path
+  redirect_to question2s_path
 else
   flash.now[:alert] = "There was an error deleting the post."
   render :show
