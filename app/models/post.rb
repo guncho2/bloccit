@@ -1,5 +1,6 @@
 class Post < ApplicationRecord
-    #  has_many :comments
+
+       belongs_to :topic
     has_many :comments, dependent: :destroy
 
 end
