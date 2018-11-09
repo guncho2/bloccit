@@ -14,7 +14,7 @@ RSpec.describe Post, type: :model do
 # #4
   let(:post) { topic.posts.create!(title: title, body: body) }
 
-  it { is_expected.to belongs_to(:topic) }
+  it { is_expected.to belong_to(:topic) }
 
  # #2
    describe "attributes" do

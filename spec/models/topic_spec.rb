@@ -6,6 +6,7 @@ RSpec.describe Topic, type: :model do
   let(:public) { true }
   let(:topic) { Topic.create!(name: name, description: description) }
 
+let(:post) { topic.posts.create!(title: "New Post Title", body: "New Post Body") }
 
    it { is_expected.to have_many(:posts) }
 

@@ -1,20 +1,20 @@
 Rails.application.routes.draw do
 
-
+   resources :topics
 
   resources :question2s
 
-  get 'question2s/index'
-  get 'question2s/show'
-  get 'question2s/new'
-  get 'question2s/edit'
+  # get 'question2s/index'
+  # get 'question2s/show'
+  # get 'question2s/new'
+  # get 'question2s/edit'
 
   resources :advertisements
 
-  get 'advertisements/index'
-  get 'advertisements/show'
-  get 'advertisements/new'
-  get 'advertisements/create'
+  # get 'advertisements/index'
+  # get 'advertisements/show'
+  # get 'advertisements/new'
+  # get 'advertisements/create'
 
 
   # #1
