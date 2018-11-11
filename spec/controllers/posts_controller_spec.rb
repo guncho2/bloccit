@@ -2,93 +2,163 @@ require 'rails_helper'
  # #6
 RSpec.describe PostsController, type: :controller do
 
+  # #12
+    let(:my_topic) { Topic.create!(name:  RandomData.random_sentence, description: RandomData.random_paragraph) }
+  # #13
+    let(:my_post) { my_topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph) }
+
+
+
   # #8
-   let(:my_post) { Post.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph) }
+#    let(:my_post) { Post.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph) }
+#
+###14
+#
+#   describe "GET #index" do
+#     it "returns http success" do
+#        # #7
+#       get :index
+#       expect(response).to have_http_status(:success)
+#     end
+#     it "assigns [my_post] to @posts" do
+#   get :index
+# # #9
+#   expect(assigns(:posts)).to eq([my_post])
+# end
+#   end
 
 
-  describe "GET #index" do
-    it "returns http success" do
-       # #7
-      get :index
-      expect(response).to have_http_status(:success)
-    end
-    it "assigns [my_post] to @posts" do
-  get :index
-# #9
-  expect(assigns(:posts)).to eq([my_post])
-end
-  end
+# Because posts will be nested under topics, at #12 we create a parent topic named  my_topic.
+#
+# At #13, we update how we create my_post so that it will belong to my_topic.
+#
+# At #14, we remove the index tests. Posts will no longer need an index view because
+#
+# they'll be displayed on the show view of their parent topic.
 
 #1
 describe "GET new" do
   it "returns http success" do
-    get :new
+    # get :new
+    # #18
+      get :new, params: { topic_id: my_topic.id }
+
     expect(response).to have_http_status(:success)
   end
 #2
   it "renders the #new view" do
-    get :new
+    # get :new
+    # #19
+       get :new, params: { topic_id: my_topic.id }
+
     expect(response).to render_template :new
   end
 #3
   it "instantiates @post" do
-    get :new
+    # get :new
+    # #20
+       get :new, params: { topic_id: my_topic.id }
+
     expect(assigns(:post)).not_to be_nil
   end
 end
 
+#At #18, #19, and #20 we update the get :new request to include the id of the parent topic.
+
+
 describe "POST create" do
  # #4
       it "increases the number of Post by 1" do
-        expect{ post :create, params: { post: { title: RandomData.random_sentence, body: RandomData.random_paragraph } } }.to change(Post,:count).by(1)
+        # expect{ post :create, params: { post: { title: RandomData.random_sentence, body: RandomData.random_paragraph } } }.to change(Post,:count).by(1)
+        # #21
+       expect{ post :create, params: { topic_id: my_topic.id, post: { title: RandomData.random_sentence, body: RandomData.random_paragraph } } }.to change(Post,:count).by(1)
+
       end
 
  # #5
       it "assigns the new post to @post" do
-        post :create, params: { post: { title: RandomData.random_sentence, body: RandomData.random_paragraph } }
+        # post :create, params: { post: { title: RandomData.random_sentence, body: RandomData.random_paragraph } }
+
+        # #22
+       post :create, params: { topic_id: my_topic.id, post: { title: RandomData.random_sentence, body: RandomData.random_paragraph } }
+
         expect(assigns(:post)).to eq Post.last
       end
 
  # #6
       it "redirects to the new post" do
-        post :create, params: { post: { title: RandomData.random_sentence, body: RandomData.random_paragraph } }
-        expect(response).to redirect_to Post.last
+        # post :create, params: { post: { title: RandomData.random_sentence, body: RandomData.random_paragraph } }
+        # expect(response).to redirect_to Post.last
+        # #23
+      post :create, params: { topic_id: my_topic.id, post: { title: RandomData.random_sentence, body: RandomData.random_paragraph } }
+# #24
+      expect(response).to redirect_to [my_topic, Post.last]
+
       end
     end
+
+    # At #21, #22, and #23 we update the post :create request to include the id of the parent topic.
+    #
+    # At #24, because the route for the posts show view will also be updated to
+    # reflect nested posts, instead of redirecting to Post.last, we redirect to
+    # [my_topic, Post.last]. Rails' router can take an array of objects and build a
+    # route to the show page of the last object in the array, nesting it under the other objects in the array.
 
     describe "GET show" do
          it "returns http success" do
      # #16
-           get :show, params: { id: my_post.id }
+          #  get :show, params: { id: my_post.id }
+          # #15
+       get :show, params: { topic_id: my_topic.id, id: my_post.id }
+
            expect(response).to have_http_status(:success)
          end
          it "renders the #show view" do
      # #17
-           get :show, params: { id: my_post.id }
+          #  get :show, params: { id: my_post.id }
+          # #16
+      get :show, params: { topic_id: my_topic.id, id: my_post.id }
+
            expect(response).to render_template :show
          end
 
          it "assigns my_post to @post" do
-           get :show, params: { id: my_post.id }
+          #  get :show, params: { id: my_post.id }
+          # #17
+      get :show, params: { topic_id: my_topic.id, id: my_post.id }
      # #18
            expect(assigns(:post)).to eq(my_post)
          end
        end
 
+
+      #  Posts routes will now include the topic_id of the parent topic, so at
+      #  #15, #16, and #17 we update our get :show request to include the id of the parent topic.
+
+
        describe "GET edit" do
          it "returns http success" do
-           get :edit, params: { id: my_post.id }
+          #  get :edit, params: { id: my_post.id }
+          # #25
+       get :edit, params: { topic_id: my_topic.id, id: my_post.id }
+
            expect(response).to have_http_status(:success)
          end
+
          it "renders the #edit view" do
-           get :edit, params: { id: my_post.id }
-           #1
+          #  get :edit, params: { id: my_post.id }
+          # #26
+      get :edit, params: { topic_id: my_topic.id, id: my_post.id }
+    #1
            expect(response).to render_template :edit
          end
 
          #2
          it "assigns post to be updated to @post" do
-       get :edit, params: { id: my_post.id }
+      #  get :edit, params: { id: my_post.id }
+      # #27
+       get :edit, params: { topic_id: my_topic.id, id: my_post.id }
+
 
        post_instance = assigns(:post)
 
@@ -98,14 +168,19 @@ describe "POST create" do
        end
      end
 
+
+#At #25, #26, and #27 we update the get :edit request to include the id of the parent topic.
+
+
      describe "PUT update" do
        it "updates posts with expected attributes" do
          new_title = RandomData.random_sentence
          new_body = RandomData.random_paragraph
 
-         put :update, params: { id: my_post.id, post: {title: new_title, body: new_body}}
-
-         #3
+        #  put :update, params: { id: my_post.id, post: {title: new_title, body: new_body}}
+        # #28
+       put :update, params: { topic_id: my_topic.id, id: my_post.id, post: {title: new_title, body: new_body } }
+   #3
 
          updated_post = assigns(:post)
          expect(updated_post.id).to eq my_post.id
@@ -117,27 +192,49 @@ describe "POST create" do
        new_body = RandomData.random_paragraph
 
  # #4
-       put :update, params: { id: my_post.id, post: {title: new_title, body: new_body } }
-       expect(response).to redirect_to my_post
+      #  put :update, params: { id: my_post.id, post: {title: new_title, body: new_body } }
+      #  expect(response).to redirect_to my_post
 
-
-       end
+      # #29
+      put :update, params: { topic_id: my_topic.id, id: my_post.id, post: {title: new_title, body: new_body } }
+# #30
+      expect(response).to redirect_to [my_topic, my_post]
+           end
      end
+
+#At #28 and #29 we update the put :update request to include the id of the parent topic.
+
+#At #30, we replace redirect_to my_post with redirect_to [my_topic, my_post] so
+#that we'll be redirected to the posts show view after we nest posts.
 
      describe "DELETE destroy" do
      it "deletes the post" do
-       delete :destroy, params: { id: my_post.id }
+      #  delete :destroy, params: { id: my_post.id }
+
  # #6
+ # #31
+      delete :destroy, params: { topic_id: my_topic.id, id: my_post.id }
+
        count = Post.where({id: my_post.id}).size
        expect(count).to eq 0
      end
 
-     it "redirects to posts index" do
-       delete :destroy, params: { id: my_post.id }
- # #7
-       expect(response).to redirect_to posts_path
+ #     it "redirects to posts index" do
+ #       delete :destroy, params: { id: my_post.id }
+ # # #7
+ #       expect(response).to redirect_to posts_path
+ it "redirects to topic show" do
+# #32
+   delete :destroy, params: { topic_id: my_topic.id, id: my_post.id }
+# #33
+   expect(response).to redirect_to my_topic
+
      end
    end
+#At #31 and #32 we update the delete :destroy request to include the id of the parent topic.
+
+#At #33, we want to be redirected to the topics show view instead of the posts index
+
 
 
 ##  describe "GET #show" do
