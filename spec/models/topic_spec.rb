@@ -7,9 +7,11 @@ RSpec.describe Topic, type: :model do
   let(:topic) { Topic.create!(name: name, description: description) }
 
 let(:post) { topic.posts.create!(title: "New Post Title", body: "New Post Body") }
+let(:sponsoredpost) { topic.sponsored_posts.create!(title: "New Sponsoredpost Title", body: "New Sponsoredpost Body") }
 
    it { is_expected.to have_many(:posts) }
 
+   it { is_expected.to have_many(:sponsored_posts) }
 
 # #1
   describe "attributes" do

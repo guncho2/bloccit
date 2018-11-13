@@ -54,6 +54,14 @@ end
   )
 end
 
+50.times do
+  SponsoredPost.create!(
+    topic: topics.sample,
+    title:  RandomData.random_sentence,
+    body:   RandomData.random_paragraph,
+    price:  rand(1..100)
+  )
+end
 
 
 puts "#{Post.count}"
@@ -67,6 +75,8 @@ puts "#{Post.count} posts created"
 puts "#{Comment.count} comments created"
 puts "#{Advertisement.count} advertisements created"
 puts "#{Question2.count} question2 created"
+puts "#{SponsoredPost.count} sponsored posts created"
+
 
 
 
