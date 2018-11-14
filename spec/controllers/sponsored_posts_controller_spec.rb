@@ -1,9 +1,9 @@
 require 'rails_helper'
-include RandomData
+
 RSpec.describe SponsoredPostsController, type: :controller do
 
   let(:my_topic) { create(:topic) }
-    let(:my_sponsoredpost) { my_topic.sponsored_posts.create!(title: RandomData.random_title, body: RandomData.random_paragraph, price: rand(1..256)) }
+    let(:my_sponsoredpost) { my_topic.sponsored_posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, price: rand(1..256)) }
 
     describe "GET show" do
       it "returns http success" do
@@ -41,16 +41,16 @@ RSpec.describe SponsoredPostsController, type: :controller do
 
     describe "POST create" do
       it "increases the number of SponsoredPost by 1" do
-        expect{ post :create, params: { topic_id: my_topic.id, sponsoredpost: { title: RandomData.random_title, body: RandomData.random_paragraph, price: rand(1..256) } } }.to change(SponsoredPost,:count).by(1)
+        expect{ post :create, params: { topic_id: my_topic.id, sponsoredpost: { title: RandomData.random_sentence, body: RandomData.random_paragraph, price: rand(1..256) } } }.to change(SponsoredPost,:count).by(1)
       end
 
       it "assigns the new sponsoredpost to @sponsoredpost" do
-        post :create, params: { topic_id: my_topic.id, sponsoredpost: { title: RandomData.random_title, body: RandomData.random_paragraph, price: rand(1..256) } }
+        post :create, params: { topic_id: my_topic.id, sponsoredpost: { title: RandomData.random_sentence, body: RandomData.random_paragraph, price: rand(1..256) } }
          expect(assigns(:sponsoredpost)).to eq SponsoredPost.last
       end
 
       it "redirects to the new sponsoredpost" do
-        post :create, params: { topic_id: my_topic.id, sponsoredpost: {title: RandomData.random_title, body: RandomData.random_paragraph, price: rand(1..256) } }
+        post :create, params: { topic_id: my_topic.id, sponsoredpost: {title: RandomData.random_sentence body: RandomData.random_paragraph, price: rand(1..256) } }
          expect(response).to redirect_to [my_topic, SponsoredPost.last]
       end
     end
@@ -80,7 +80,7 @@ RSpec.describe SponsoredPostsController, type: :controller do
 
     describe "PUT update" do
       it "updates sponsoredpost with expected attributes" do
-        new_title = RandomData.random_title
+        new_title = RandomData.random_sentence
         new_body = RandomData.random_paragraph
         new_price = rand(1..256)
 
@@ -94,7 +94,7 @@ RSpec.describe SponsoredPostsController, type: :controller do
       end
 
       it "redirects to the updated sponsoredpost" do
-        new_title = RandomData.random_title
+        new_title = RandomData.random_sentence
         new_body = RandomData.random_paragraph
 
         put :update, params: { topic_id: my_topic.id, id: my_sponsoredpost.id, sponsoredpost: {title: new_title, body: new_body, price: rand(1..256) } }
