@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe SponsoredPostsController, type: :controller do
 
-  let(:my_topic) { create(:topic) }
+  let(:my_topic) { create!(:topic) }
     let(:my_sponsoredpost) { my_topic.sponsored_posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, price: rand(1..256)) }
 
     describe "GET show" do
@@ -39,18 +39,18 @@ RSpec.describe SponsoredPostsController, type: :controller do
       end
     end
 
-    describe "POST create" do
+    describe "POST create!" do
       it "increases the number of SponsoredPost by 1" do
-        expect{ post :create, params: { topic_id: my_topic.id, sponsoredpost: { title: RandomData.random_sentence, body: RandomData.random_paragraph, price: rand(1..256) } } }.to change(SponsoredPost,:count).by(1)
+        expect{ post :create!, params: { topic_id: my_topic.id, sponsoredpost: { title: RandomData.random_sentence, body: RandomData.random_paragraph, price: rand(1..256) } } }.to change(SponsoredPost,:count).by(1)
       end
 
       it "assigns the new sponsoredpost to @sponsoredpost" do
-        post :create, params: { topic_id: my_topic.id, sponsoredpost: { title: RandomData.random_sentence, body: RandomData.random_paragraph, price: rand(1..256) } }
+        post :create!, params: { topic_id: my_topic.id, sponsoredpost: { title: RandomData.random_sentence, body: RandomData.random_paragraph, price: rand(1..256) } }
          expect(assigns(:sponsoredpost)).to eq SponsoredPost.last
       end
 
       it "redirects to the new sponsoredpost" do
-        post :create, params: { topic_id: my_topic.id, sponsoredpost: {title: RandomData.random_sentence body: RandomData.random_paragraph, price: rand(1..256) } }
+        post :create!, params: { topic_id: my_topic.id, sponsoredpost: { title: RandomData.random_sentence, body: RandomData.random_paragraph, price: rand(1..256) } }
          expect(response).to redirect_to [my_topic, SponsoredPost.last]
       end
     end
