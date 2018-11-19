@@ -13,6 +13,11 @@ let(:sponsoredpost) { topic.sponsored_posts.create!(title: "New Sponsoredpost Ti
 
    it { is_expected.to have_many(:sponsored_posts) }
 
+   it { is_expected.to validate_length_of(:name).is_at_least(5) }
+   it { is_expected.to validate_length_of(:description).is_at_least(15) }
+   it { is_expected.to validate_presence_of(:name) }
+    it { is_expected.to validate_presence_of(:description) }
+
 # #1
   describe "attributes" do
     it "has name, description, and public attributes" do

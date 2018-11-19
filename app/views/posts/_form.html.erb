@@ -1,0 +1,41 @@
+<%= form_for [topic, post] do |f| %>
+  <!-- <div class="form-group"> -->
+
+  <% if post.errors.any? %>
+<!-- # #6 -->
+   <div class="alert alert-danger">
+<!-- # #7 -->
+     <h4><%= pluralize(post.errors.count, "error") %>.</h4>
+     <ul>
+       <% post.errors.full_messages.each do |msg| %>
+         <li><%= msg %></li>
+       <% end %>
+     </ul>
+   </div>
+ <% end %>
+<!-- # #8 -->
+ <%= form_group_tag(post.errors[:title]) do %>
+
+    <%= f.label :title %>
+     <%= f.text_field :title, class: 'form-control', placeholder: "Enter post title" %>
+  <!-- </div>
+  <div class="form-group"> -->
+
+  <% end %>
+<!-- # #9 -->
+ <%= form_group_tag(post.errors[:body]) do %>
+
+    <%= f.label :body %>
+    <%= f.text_area :body, rows: 8, class: 'form-control', placeholder: "Enter post body" %>
+  <!-- </div> -->
+  <% end %>
+  <div class="form-group">
+    <%= f.submit "Save", class: 'btn btn-success' %>
+  </div>
+<% end %>
+
+
+<!-- At #6, if there are any validation errors, we display an alert with the number of errors and
+their messages. At #7, we use the pluralize method to pluralize "error" if there is more than
+ one error. At #8, we use form_group_tag to display title errors. At #9, we use form_group_tag
+  to display body errors. -->
