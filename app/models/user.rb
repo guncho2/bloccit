@@ -8,7 +8,8 @@ class User < ApplicationRecord
 # #3
   validates :name, length: { minimum: 1, maximum: 100 }, presence: true
 # #4
- validates :password, presence: true, length: { minimum: 6 }, if: "password_digest.nil?"
+validates :password, presence: true, length: { minimum: 6 }, if: -> { password_digest.nil? }
+
  validates :password, length: { minimum: 6 }, allow_blank: true
 # #5
   validates :email,
@@ -24,8 +25,8 @@ def format_name
 
     name_array = []
     name.split.each do |name_part|
-      name.part.capitalize
-      name_array << name.part.capitalize
+
+      name_array << name_part.capitalize
     end
     self.name = name_array.join(" ")
 
