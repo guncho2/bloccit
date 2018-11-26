@@ -24,12 +24,14 @@ resources :topics do
 # #34
    resources :posts, except: [:index]
 
- resources :users, only: [:new, :create]
+
 
 
 
    resources :sponsored_posts, except: [:index]
  end
+
+ resources :users, only: [:new, :create]
  #At #34 we pass resources :posts to the resources :topics block.
  #This nests the post routes under the topic routes.
 
