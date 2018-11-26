@@ -32,6 +32,8 @@ resources :topics do
  end
 
  resources :users, only: [:new, :create]
+ post 'users/confirm' => 'users#confirm'
+
  #At #34 we pass resources :posts to the resources :topics block.
  #This nests the post routes under the topic routes.
 
