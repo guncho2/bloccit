@@ -4,6 +4,13 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
+  def user_params
+     params.require(:user).permit(:name, :email, :password, :password_confirmation)
+   end
+
+
+
+
 
   def confirm
 
@@ -34,7 +41,8 @@ class UsersController < ApplicationController
          render :new
        end
      end
-
+     # This makes `user_params()` available in the view.
+     helper_method :user_params
 
 end
 
