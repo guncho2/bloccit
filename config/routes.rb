@@ -33,6 +33,7 @@ resources :topics do
 
  resources :users, only: [:new, :create]
  post 'users/confirm' => 'users#confirm'
+resources :sessions, only: [:new, :create, :destroy]
 
  #At #34 we pass resources :posts to the resources :topics block.
  #This nests the post routes under the topic routes.
