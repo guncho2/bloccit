@@ -22,7 +22,7 @@
            <%= image_tag avatar_url(current_user), class: :gravatar %>
            <div class="pull-rigth">
 
-             <%= current_user.name %> <br>  <% link_to "Sign Out", session_path(current_user), method: :delete %>
+             <%= current_user.name %> <br>  <%= link_to "Sign Out", session_path(current_user), method: :delete %>
 
 
            </div>

@@ -14,11 +14,14 @@ class UsersController < ApplicationController
 
   def confirm
 
-       @user = User.new
-       @user.name = params[:user][:name]
-       @user.email = params[:user][:email]
-       @user.password = params[:user][:password]
-       @user.password_confirmation = params[:user][:password_confirmation]
+      #  @user = User.new
+      #  @user.name = params[:user][:name]
+      #  @user.email = params[:user][:email]
+      #  @user.password = params[:user][:password]
+      #  @user.password_confirmation = params[:user][:password_confirmation]
+
+      @user = User.new(user_params)
+
 
 
      end
@@ -26,11 +29,13 @@ class UsersController < ApplicationController
 
   def create
    # #9
-       @user = User.new
-       @user.name = params[:user][:name]
-       @user.email = params[:user][:email]
-       @user.password = params[:user][:password]
-       @user.password_confirmation = params[:user][:password_confirmation]
+      #  @user = User.new
+      #  @user.name = params[:user][:name]
+      #  @user.email = params[:user][:email]
+      #  @user.password = params[:user][:password]
+      #  @user.password_confirmation = params[:user][:password_confirmation]
+      @user = User.new(user_params)
+
 
    # #10
        if @user.save
