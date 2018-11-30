@@ -1,12 +1,19 @@
 class PostsController < ApplicationController
 
 
+  # #12
+     before_action :require_sign_in, except: :show
+
+
 
 
   def show
 
     @post = Post.find(params[:id])
   end
+
+
+
 
   def new
     #7
@@ -15,14 +22,23 @@ class PostsController < ApplicationController
   end
 
 
+
+
+
   def create
    # #9
-       @post = Post.new
-       @post.title = params[:post][:title]
-       @post.body = params[:post][:body]
+      #  @post = Post.new
+      #  @post.title = params[:post][:title]
+      #  @post.body = params[:post][:body]
        @topic = Topic.find(params[:topic_id])
 # #35
-       @post.topic = @topic
+      #  @post.topic = @topic
+
+       @post = @topic.posts.build(post_params)
+       # #14
+       @post.user = current_user
+
+
 
    # #10
        if @post.save
@@ -40,8 +56,8 @@ class PostsController < ApplicationController
      end
      def update
           @post = Post.find(params[:id])
-          @post.title = params[:post][:title]
-          @post.body = params[:post][:body]
+
+          @post.assign_attributes(post_params)
 
           if @post.save
             flash[:notice] = "Post was updated."
@@ -76,6 +92,11 @@ class PostsController < ApplicationController
 
   def edit
      @post = Post.find(params[:id])
+  end
+
+  private
+  def post_params
+    params.require(:post).permit(:title, :body)
   end
 end
 
@@ -113,3 +134,8 @@ end
 #At #36 and #37 we change the redirect to use the nested post path.
 
 #At #38, when a post is deleted, we direct users to the topic show view.
+
+# At #12, we use a before_action filter to call the require_sign_in method before each
+# of our controller actions, except for the show action.
+
+#At #14, we assign @post.user in the same way we assigned @post.topic, to properly scope the new post.

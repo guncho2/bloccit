@@ -105,7 +105,7 @@ RSpec.describe Question2sController, type: :controller do
   it "redirects to question2s index" do
     delete :destroy, params: { id: my_question2.id }
  # #7
-    expect(response).to redirect_to question2_path
+    expect(response).to redirect_to question2s_path
   end
  end
 

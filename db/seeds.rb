@@ -6,6 +6,21 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 require 'random_data'
+
+
+# Create Users
+ 5.times do
+   User.create!(
+ # #3
+   name:     RandomData.random_name,
+   email:    RandomData.random_email,
+   password: RandomData.random_sentence
+   )
+ end
+ users = User.all
+
+
+
 # Create Topics
  15.times do
    Topic.create!(
@@ -21,6 +36,8 @@ require 'random_data'
 # #1
   Post.create!(
 # #2
+      user:   users.sample,
+
      topic:  topics.sample,
     title:  RandomData.random_sentence,
     body:   RandomData.random_paragraph
@@ -63,6 +80,11 @@ end
   )
 end
 
+user = User.first
+ user.update_attributes!(
+   email: 'lowensrs@gmail.com', # replace this with your personal email
+   password: 'helloworld'
+ )
 
 puts "#{Post.count}"
 Post.find_or_create_by(title: "Only this title", body: "Only this body")
@@ -70,6 +92,7 @@ puts "#{Post.count}"
 
 
 puts "Seed finished"
+puts "#{User.count} users created"
 puts "#{Topic.count} topics created"
 puts "#{Post.count} posts created"
 puts "#{Comment.count} comments created"
@@ -96,3 +119,5 @@ puts "#{SponsoredPost.count} sponsored posts created"
 
 #At #4, we call sample on the array returned by Post.all, in order to pick a random post
 # to associate each comment with. sample returns a random element from the array every time it's called.
+
+#At #3, we wishful-coded two methods that we'll need to add to RandomData:
