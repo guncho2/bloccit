@@ -82,9 +82,33 @@ end
 
 user = User.first
  user.update_attributes!(
-   email: 'lowensrs@gmail.com', # replace this with your personal email
+   email: 'arquimedes@gmail.com', # replace this with your personal email
    password: 'helloworld'
  )
+
+ # Create an admin user
+ admin = User.create!(
+   name:     'Admin User',
+   email:    'admin@example.com',
+   password: 'helloworld',
+   role:     'admin'
+ )
+
+ # Create a member
+ member = User.create!(
+   name:     'Member User',
+   email:    'member@example.com',
+   password: 'helloworld'
+ )
+
+ # Create a moderator
+moderator = User.create!(
+  name:     'Moderator User',
+  email:    'moderator@example.com',
+  password: 'helloworld',
+  role:     'moderator'
+)
+
 
 puts "#{Post.count}"
 Post.find_or_create_by(title: "Only this title", body: "Only this body")

@@ -1,4 +1,13 @@
 class TopicsController < ApplicationController
+
+  # #7
+  before_action :require_sign_in, except: [:index, :show]
+# #8
+  before_action :authorize_user, except: [:index, :show]
+
+ before_action :is_moderator?, only: [:update]
+
+
   def index
   @topics = Topic.all
 end
@@ -69,9 +78,30 @@ end
      params.require(:topic).permit(:name, :description, :public)
    end
 
+
+   # #9
+     def authorize_user
+       unless current_user.admin?
+         flash[:alert] = "You must be an admin to do that."
+         redirect_to topics_path
+       end
+     end
+
+     def is_moderator?
+         if current_user.moderator?
+           flash[:alert] = "You must be an admin to do that."
+           redirect_to topics_path
+         end
+       end
 end
 
 
 
 # redirect_to action: :index is the same as redirect_to topics_path because
 # topics_path routes to the index action per Rails' resourceful routing.
+
+# At #7, we use the before_action filter and the require_sign_in method from  ApplicationController to redirect guest users who attempt to access controller actions other than index or show.
+#
+# At #8, we use another before_action filter to check the role of signed-in users. If the  current_user isn't an admin, we'll redirect them to the topics index view.
+#
+# At #9, we define authorize_user, which is used in #8 to redirect non-admin users to  topics_path (the topics index view).

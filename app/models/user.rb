@@ -5,6 +5,9 @@ class User < ApplicationRecord
   # #2
   before_save { self.email = email.downcase if email.present? }
   before_save :format_name
+  before_save { self.role ||= :member }
+
+
 
 
 # #3
@@ -34,8 +37,11 @@ def format_name
 
   end
 
+
   end
 
+  enum role: [:member, :admin, :moderator]
+  
 
 
 end
@@ -72,3 +78,4 @@ end
 #    be inclined to write to securely save passwords.  has_secure_password requires a password_digest attribute
 #     on the model it is applied to. has_secure_password creates two virtual attributes, password and
 #      password_confirmation that we use to set and save the password.
+# ||= is a Ruby trick. The code self.role ||= :member, then, is shorthand for  self.role = :member if self.role.nil?.

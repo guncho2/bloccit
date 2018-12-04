@@ -25,6 +25,57 @@ RSpec.describe User, type: :model do
      it "should have name and email attributes" do
        expect(user).to have_attributes(name: "Bloccit User", email: "user@bloccit.com")
      end
+
+     # #1
+     it "responds to role" do
+       expect(user).to respond_to(:role)
+     end
+
+ # #2
+     it "responds to admin?" do
+       expect(user).to respond_to(:admin?)
+     end
+
+ # #3
+     it "responds to member?" do
+       expect(user).to respond_to(:member?)
+     end
+   end
+
+   describe "roles" do
+ # #4
+     it "is member by default" do
+       expect(user.role).to eql("member")
+     end
+
+ # #5
+     context "member user" do
+       it "returns true for #member?" do
+         expect(user.member?).to be_truthy
+       end
+
+       it "returns false for #admin?" do
+         expect(user.admin?).to be_falsey
+       end
+     end
+
+ # #6
+     context "admin user" do
+       before do
+         user.admin!
+       end
+
+       it "returns false for #member?" do
+         expect(user.member?).to be_falsey
+       end
+
+       it "returns true for #admin?" do
+         expect(user.admin?).to be_truthy
+       end
+     end
+   end
+
+
      it "should format the user's name" do
        user.name = "bloc user"
        user.save
@@ -47,7 +98,7 @@ RSpec.describe User, type: :model do
 
    end
 
-end
+
 
 
 # At #1, we wrote a test that does not follow the same conventions as our previous tests. We are testing for a value
@@ -55,3 +106,13 @@ end
 #  A true positive follows the reciprocal pattern and tests for a known and valid value. True negatives are a useful
 #   testing strategy, because if we only test for values that we know should exist, we may not catch values that
 #   shouldn't.
+
+# At #1, we expect that users will respond to role.
+#
+# At #2, we expect users will respond to admin?, which will return whether or not a user is an admin. We'll implement this using the ActiveRecord::Enum class.
+#
+# At #3, we expect users will respond to member?, which will return whether or not a user is a member.
+#
+# At #4, we expect that users will be assigned the role of member by default.
+#
+# At #5 and #6, we test member and admin users within separate contexts.
