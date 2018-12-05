@@ -69,7 +69,8 @@ RSpec.describe PostsController, type: :controller do
 
   context "moderator user doing CRUD on a post they don't own" do
     before do
-      create_session(my_user)
+      other_user.moderator!
+      create_session(other_user)
     end
 
     describe "GET show" do
@@ -265,8 +266,7 @@ RSpec.describe PostsController, type: :controller do
       end
     end
   end
-
-
+  
 
   context "admin user doing CRUD on a post they don't own" do
     before do

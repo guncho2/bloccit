@@ -7,7 +7,8 @@ class PostsController < ApplicationController
      # #10
        before_action :authorize_user, except: [:show, :new, :create]
 
-       before_action :is_moderator?, only: [:create, :update]
+       before_action :is_moderator?
+
 
   def show
 
@@ -112,7 +113,9 @@ class PostsController < ApplicationController
    end
 
    def is_moderator?
-      if current_user.moderator?
+
+      unless current_user.moderator?
+
         flash[:alert] = "You must be an admin to do that."
         redirect_to topics_path
       end
