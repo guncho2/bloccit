@@ -19,7 +19,7 @@
    </div>
 
    <!-- #12 -->
-  <% if user_is_authorized_for_topics? || user_is_moderator? %>
+  <% if current_user && user_is_admin? %>
 
    <div class="col-md-4">
  <!-- #9 -->
