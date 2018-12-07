@@ -12,7 +12,18 @@ RSpec.describe Comment, type: :model do
 
 
 
-let(:comment) { Comment.create!(body: 'Comment Body', post: post) }
+# let(:comment) { Comment.create!(body: 'Comment Body', post: post) }
+
+# #1
+   let(:comment) { Comment.create!(body: 'Comment Body', post: post, user: user) }
+
+ # #2
+     it { is_expected.to belong_to(:post) }
+     it { is_expected.to belong_to(:user) }
+ # #3
+     it { is_expected.to validate_presence_of(:body) }
+     it { is_expected.to validate_length_of(:body).is_at_least(5) }
+
 
 describe "attributes" do
   it "has a body attribute" do
@@ -20,3 +31,9 @@ describe "attributes" do
   end
 end
 end
+
+#At #1, we create a comment with an associated user.
+
+#At #2, we test that a comment belongs to a user and a post.
+
+#At #3, we test that a comment's body is present and has a minimum length of five

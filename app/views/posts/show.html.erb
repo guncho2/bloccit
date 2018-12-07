@@ -12,7 +12,17 @@
  <div class="row">
    <div class="col-md-8">
      <p><%= @post.body %></p>
+     <div>
+      <h3>Comments</h3>
+      <%= render @post.comments %>
    </div>
+
+   <!-- #19 -->
+        <% if current_user %>
+    <!-- #20 -->
+          <%= render 'comments/form', comment: Comment.new, post: @post %>
+        <% end %>
+
 
 
    <% if user_can_edit?(@post) %>
@@ -53,3 +63,10 @@ default method (:post) with :delete so that when the button is pressed the route
 
   At #43, we update link_to to take an array consisting of a topic and post, which it uses to build the
    link to delete a nested post. -->
+
+   <!-- At #19, we allow signed in users to see the comment form.
+
+At #20, we render the comment form, and use comments/form, because we are rendering the comment form from a post view.
+If we didn't specify comments, Rails would render the posts form partial by default.
+
+The show view for any post with a signed-in user will display a form for creating a comment. -->

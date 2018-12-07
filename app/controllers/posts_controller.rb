@@ -135,6 +135,11 @@ class PostsController < ApplicationController
     end
   end
 
+#we use a before_action filter to call the authorize_user_to_update, before each
+# of our controller actions, except for the : [:show, :new, :create, :destroy]
+#puede hacer todo update  menos delete, show, create y new, el RESTO (except)
+
+
   def authorize_user_to_delete
     post = Post.find(params[:id])
     unless current_user == post.user || current_user.admin?
@@ -142,8 +147,9 @@ class PostsController < ApplicationController
       redirect_to [post.topic, post]
     end
   end
-  
-
+# we use a before_action filter to call the authorize_user_to_delete, before each
+# of our controller actions, except for the : [:show, :new, :create, :edit, :update]
+#puede hacer todo delete antes pero no el RESTO, el RESTO (except) lo hace con admin,moderator o el post user
 
 
 
