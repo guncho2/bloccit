@@ -19,20 +19,8 @@
      <p class="lead"><%= @topic.description %></p>
  <!-- #10 -->
      <% @topic.posts.each do |post| %>
-       <div class="media">
-         <div class="media-body">
-           <h4 class="media-heading">
+      <%= render partial: 'posts/post', locals: { post: post } %>
 
-             <!-- #39 -->
-             <%= link_to post.title, topic_post_path(@topic, post) %>
-           </h4>
-           <!-- #40 -->
-          <small>
-            submitted <%= time_ago_in_words(post.created_at) %> ago <br>
-            <%= post.comments.count %> Comments
-          </small>
-         </div>
-       </div>
      <% end %>
    </div>
 
