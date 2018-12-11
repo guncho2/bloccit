@@ -34,7 +34,7 @@ require 'random_data'
 # Create Posts
 50.times do
 # #1
-  Post.create!(
+  post = Post.create!(
 # #2
       user:   users.sample,
 
@@ -42,6 +42,12 @@ require 'random_data'
     title:  RandomData.random_sentence,
     body:   RandomData.random_paragraph
   )
+
+
+# #12
+  post.update_attribute(:created_at, rand(10.minutes .. 1.year).ago)
+# #13
+  rand(1..5).times { post.votes.create!(value: [-1, 1].sample, user: users.sample) }
 end
 posts = Post.all
 
@@ -124,6 +130,7 @@ puts "#{Comment.count} comments created"
 puts "#{Advertisement.count} advertisements created"
 puts "#{Question2.count} question2 created"
 puts "#{SponsoredPost.count} sponsored posts created"
+puts "#{Vote.count} votes created"
 
 
 
@@ -146,3 +153,10 @@ puts "#{SponsoredPost.count} sponsored posts created"
 # to associate each comment with. sample returns a random element from the array every time it's called.
 
 #At #3, we wishful-coded two methods that we'll need to add to RandomData:
+
+
+# At #12, we update the time a post was created. This makes our seeded data more realistic and will
+# allow us to see our ranking algorithm in action later in the checkpoint.
+#
+# At #13, we create between one and five votes for each post. [-1, 1].sample randomly
+#  creates either an up vote or a down vote.

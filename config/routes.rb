@@ -36,7 +36,15 @@ resources :topics do
   resources :posts, only: [] do
 # #5
     resources :comments, only: [:create, :destroy]
+    post '/up-vote' => 'votes#up_vote', as: :up_vote
+     post '/down-vote' => 'votes#down_vote', as: :down_vote
+
   end
+
+
+# These new lines create POST routes at the URL posts/:id/up-vote and
+# posts/:id/down-vote. The as key-value pairs at the end stipulate the method
+# names which will be associated with these routes: up_vote_path and  down_vote_path.
 
 
  resources :users, only: [:new, :create]

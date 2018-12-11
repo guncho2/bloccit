@@ -19,7 +19,7 @@ RSpec.describe Post, type: :model do
  # #2
    let(:post) { topic.posts.create!(title: title, body: body, user: user) }
    it { is_expected.to have_many(:comments) }
-   
+   it { is_expected.to have_many(:votes) }
 
   it { is_expected.to belong_to(:topic) }
    it { is_expected.to belong_to(:user) }
@@ -44,6 +44,39 @@ RSpec.describe Post, type: :model do
 
      end
    end
+
+   describe "voting" do
+# #5
+    before do
+      3.times { post.votes.create!(value: 1, user: user) }
+      2.times { post.votes.create!(value: -1, user: user) }
+      @up_votes = post.votes.where(value: 1).count
+      @down_votes = post.votes.where(value: -1).count
+    end
+
+# #6
+    describe "#up_votes" do
+      it "counts the number of votes with value = 1" do
+        expect( post.up_votes ).to eq(@up_votes)
+      end
+    end
+
+# #7
+    describe "#down_votes" do
+      it "counts the number of votes with value = -1" do
+        expect( post.down_votes ).to eq(@down_votes)
+      end
+    end
+
+# #8
+    describe "#points" do
+      it "returns the sum of all down and up votes" do
+        expect( post.points ).to eq(@up_votes - @down_votes)
+      end
+    end
+  end
+
+
 end
 
 
@@ -59,3 +92,14 @@ end
 # method call which creates a post for a given topic.
 #At #1, we test that Post validates the presence of title, body, and topic.
 # At #2, we test that Post validates the lengths of title and body.
+
+# est the association between posts, users, and votes:
+
+
+# At #5, we create three up votes and two down votes before each voting spec.
+#
+# At #6, we test that up_votes returns the count of up votes
+#
+# At #7, we test that down_votes returns the count of down votes.
+#
+# At #8, we test that points returns the sum of all votes on the post.
