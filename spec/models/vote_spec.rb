@@ -16,6 +16,19 @@ RSpec.describe Vote, type: :model do
  # #3
    it { is_expected.to validate_inclusion_of(:value).in_array([-1, 1]) }
 
+   describe "update_post callback" do
+        it "triggers update_post on save" do
+    # #26
+          expect(vote).to receive(:update_post).at_least(:once)
+          vote.save!
+        end
+
+        it "#update_post should call update_rank on post " do
+    # #27
+          expect(post).to receive(:update_rank).at_least(:once)
+          vote.save!
+        end
+      end
 
 end
 
@@ -27,3 +40,7 @@ end
 # At #2, we test that value is present when votes are created.
 #
 # At #3, we validate that value is either -1 (a down vote) or 1 (an up vote).
+
+# At #26, we expect update_post_rank to be called on vote after it's saved.
+#
+# At #27, we expect that the vote's post will receive a call to update_rank

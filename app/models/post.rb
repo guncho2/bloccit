@@ -6,7 +6,10 @@ class Post < ApplicationRecord
     # #4
    has_many :votes, dependent: :destroy
 
-     default_scope { order('created_at DESC') }
+   after_create :create_vote
+
+
+      default_scope { order('rank DESC') }
 scope :ordered_by_title, -> { order('title DESC') }
 scope :ordered_by_reverse_created_at, -> { order('created_at ASC') }
     validates :title, length: { minimum: 5 }, presence: true
@@ -31,7 +34,16 @@ scope :ordered_by_reverse_created_at, -> { order('created_at ASC') }
    end
 
 
+   def update_rank
+       age_in_days = (created_at - Time.new(1970,1,1)) / 1.day.seconds
+       new_rank = points + age_in_days
+       update_attribute(:rank, new_rank)
+     end
 
+
+def create_vote
+  user.votes.create(value: 1, post: self)
+end
 
 
 
@@ -49,7 +61,7 @@ end
 #
 # # At #9, we find the up votes for a post by passing value: 1 to where. This fetches a collection
 # of votes with a value of 1. We then call count on the collection to get a total of all up votes.
-# # 
+# #
 # # At #10, we find the down votes for a post by passing value: -1 to where.  where(value: -1)
 # fetches only the votes with a value of -1. We then call count on the collection to get a total of all up votes.
 # #
