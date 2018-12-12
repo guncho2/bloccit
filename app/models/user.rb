@@ -6,6 +6,8 @@ class User < ApplicationRecord
 
    has_many :votes, dependent: :destroy
 
+   has_many :favorites, dependent: :destroy
+
 
   # #2
   before_save { self.email = email.downcase if email.present? }
@@ -30,6 +32,11 @@ validates :password, presence: true, length: { minimum: 6 }, if: -> { password_d
 # #6
   has_secure_password
 
+  def favorite_for(post)
+       favorites.where(post_id: post.id).first
+     end
+
+     
 def format_name
   if name
 
@@ -46,6 +53,9 @@ def format_name
   end
 
   enum role: [:member, :admin, :moderator]
+
+#8
+
 
 
 
@@ -84,3 +94,10 @@ end
 #     on the model it is applied to. has_secure_password creates two virtual attributes, password and
 #      password_confirmation that we use to set and save the password.
 # ||= is a Ruby trick. The code self.role ||= :member, then, is shorthand for  self.role = :member if self.role.nil?.
+
+
+
+# This method takes a post object and uses where to retrieve the user's favorites with a post_id that matches post.id.
+#  If the user has favorited post it will return an array of one item. If they haven't favorited post it will return
+#  an empty array. Calling  first on the array will return either the favorite or nil depending on whether they
+#  favorited the post.

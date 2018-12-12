@@ -5,6 +5,9 @@ class Post < ApplicationRecord
     has_many :comments, dependent: :destroy
     # #4
    has_many :votes, dependent: :destroy
+   has_many :favorites, dependent: :destroy
+
+
 
    after_create :create_vote
 

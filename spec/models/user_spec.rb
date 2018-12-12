@@ -10,6 +10,10 @@ RSpec.describe User, type: :model do
 
   it { is_expected.to have_many(:votes) }
 
+  it { is_expected.to have_many(:favorites) }
+
+
+
    # Shoulda tests for name
    it { is_expected.to validate_presence_of(:name) }
    it { is_expected.to validate_length_of(:name).is_at_least(1) }
@@ -101,6 +105,25 @@ RSpec.describe User, type: :model do
        expect(user_with_invalid_email).to_not be_valid
      end
 
+     describe "#favorite_for(post)" do
+          before do
+            topic = Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph)
+            @post = topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, user: user)
+          end
+
+          it "returns `nil` if the user has not favorited the post" do
+      # #1
+            expect(user.favorite_for(@post)).to be_nil
+          end
+
+          it "returns the appropriate favorite if it exists" do
+      # #2
+            favorite = user.favorites.where(post: @post).create
+      # #3
+            expect(user.favorite_for(@post)).to eq(favorite)
+          end
+        end
+
    end
 
 
@@ -121,3 +144,10 @@ RSpec.describe User, type: :model do
 # At #4, we expect that users will be assigned the role of member by default.
 #
 # At #5 and #6, we test member and admin users within separate contexts.
+
+
+# At #1, we expect that favorite_for will return nil if the user has not favorited  @post.
+#
+# At #2, we create a favorite for user and @post.
+#
+# At #3, we expect that favorite_for will return the favorite we created in the line before.
