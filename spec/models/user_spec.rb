@@ -106,12 +106,18 @@ RSpec.describe User, type: :model do
      end
 
      describe "#favorite_for(post)" do
+
+       let(:user) { User.create!(name: "Bloccit User", email: "user@bloccit.com", password: "password") }
+
           before do
+
             topic = Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph)
             @post = topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, user: user)
           end
 
           it "returns `nil` if the user has not favorited the post" do
+
+
       # #1
             expect(user.favorite_for(@post)).to be_nil
           end
@@ -125,6 +131,8 @@ RSpec.describe User, type: :model do
         end
 
    end
+
+   
 
 
 
