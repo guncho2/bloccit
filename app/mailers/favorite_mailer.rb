@@ -8,9 +8,9 @@ class FavoriteMailer < ApplicationMailer
  # We'll call this method to send an email to users, notifying them that someone
  # has left a comment on one of their favorited posts
 
-     headers["Message-ID"] = "<comments/#{comment.id}@your-app-name.example>"
-     headers["In-Reply-To"] = "<post/#{post.id}@your-app-name.example>"
-     headers["References"] = "<post/#{post.id}@your-app-name.example>"
+     headers["Message-ID"] = "<comments/#{comment.id}shrouded-shore-49718.herokuapp.com/>"
+     headers["In-Reply-To"] = "<post/#{post.id}shrouded-shore-49718.herokuapp.com/>"
+     headers["References"] = "<post/#{post.id}shrouded-shore-49718.herokuapp.com/>"
 
      @user = user
      @post = post
@@ -24,9 +24,9 @@ class FavoriteMailer < ApplicationMailer
    def new_post(post)
 
    # #18  notify the post creator that they've favorited their post and will receive updates when it's commented on.
-      headers["Message-ID"] = "<posts/#{post.id}@your-app-name.example>"
-      headers["In-Reply-To"] = "<post/#{post.id}@your-app-name.example>"
-      headers["References"] = "<post/#{post.id}@your-app-name.example>"
+      headers["Message-ID"] = "<posts/#{post.id}shrouded-shore-49718.herokuapp.com/>"
+      headers["In-Reply-To"] = "<post/#{post.id}shrouded-shore-49718.herokuapp.com/>"
+      headers["References"] = "<post/#{post.id}shrouded-shore-49718.herokuapp.com/>"
 
 
       @post = post
