@@ -89,8 +89,8 @@ end
 
 user = User.first
  user.update_attributes!(
-   email: 'arquimedes@gmail.com', # replace this with your personal email
-   password: 'helloworld'
+   email: 'lowensrs@gmail.com', # replace this with your personal email
+   password: 'RDF12345'
  )
 
  # Create an admin user
