@@ -30,6 +30,29 @@ describe "attributes" do
     expect(comment).to have_attributes(body: "Comment Body")
   end
 end
+
+describe "after_create" do
+ # #22
+     before do
+       @another_comment = Comment.new(body: 'Comment Body', post: post, user: user)
+     end
+
+ # #23
+     it "sends an email to users who have favorited the post" do
+       favorite = user.favorites.create(post: post)
+       expect(FavoriteMailer).to receive(:new_comment).with(user, post, @another_comment).and_return(double(deliver_now: true))
+
+       @another_comment.save!
+     end
+
+ # #24
+     it "does not send emails to users who haven't favorited the post" do
+       expect(FavoriteMailer).not_to receive(:new_comment)
+
+       @another_comment.save!
+     end
+   end
+
 end
 
 #At #1, we create a comment with an associated user.
@@ -37,3 +60,11 @@ end
 #At #2, we test that a comment belongs to a user and a post.
 
 #At #3, we test that a comment's body is present and has a minimum length of five
+
+
+# At #22, we initialize (but don't save) a new comment for post.
+#
+# At #23, we favorite post then expect FavoriteMailer will receive a call to new_comment. We then save @another_comment to
+ # trigger the after create callback.
+#
+# At #24, test that FavoriteMailer does not receive a call to new_comment when post isn't favorited.

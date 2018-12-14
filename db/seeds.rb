@@ -111,8 +111,8 @@ user = User.first
  # Create a moderator
 moderator = User.create!(
   name:     'Moderator User',
-  email:    'moderator@example.com',
-  password: 'helloworld',
+  email:    'lowensrs@gmail.com',
+  password: 'RDF12345',
   role:     'moderator'
 )
 
