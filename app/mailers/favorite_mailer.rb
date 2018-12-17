@@ -39,6 +39,8 @@ class FavoriteMailer < ApplicationMailer
 end
 
 
+
+
 # At #18, we set three different headers to enable conversation threading in different email clients.
 #
 # At #19, the mail method takes a hash of mail-relevant information - the subject the to address,
