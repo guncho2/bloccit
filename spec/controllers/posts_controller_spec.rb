@@ -266,7 +266,7 @@ RSpec.describe PostsController, type: :controller do
       end
     end
   end
-  
+
 
   context "admin user doing CRUD on a post they don't own" do
     before do

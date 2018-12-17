@@ -18,7 +18,7 @@ describe "attributes" do
 
   it "should respond to price" do
     expect(advertisement).to respond_to(:price)
-    
+
   end
 end
 

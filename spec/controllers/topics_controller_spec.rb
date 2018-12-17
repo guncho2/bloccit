@@ -88,7 +88,7 @@ RSpec.describe TopicsController, type: :controller do
   end
 
   #moderator finished
-  
+
 
   context "guest" do
     describe "GET index" do

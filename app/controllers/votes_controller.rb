@@ -55,7 +55,7 @@ class VotesController < ApplicationController
      end
    end
 
-   
+
 
 
 end

@@ -36,7 +36,7 @@ validates :password, presence: true, length: { minimum: 6 }, if: -> { password_d
        favorites.where(post_id: post.id).first
      end
 
-     
+
 def format_name
   if name
 
