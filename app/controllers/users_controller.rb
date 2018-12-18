@@ -49,6 +49,11 @@ class UsersController < ApplicationController
      end
      # This makes `user_params()` available in the view.
      helper_method :user_params
+##5
+
+     def show
+     @user = User.find(params[:id])
+   end
 
 end
 
@@ -56,4 +61,7 @@ end
 # At #9, we create a new user with new and then set the corresponding attributes from the params hash.
 #
 # At #10, we save the new user to the database. If the database save is successful, we add a flash
-# message and then redirect the user to the root path. Otherwise, we display an error and render the new view.
+# message and then redirect the user to the root path. Otherwise, we display an error and render
+# the new view.
+
+# At #5, we retrieve a user instance and set it to an instance variable.

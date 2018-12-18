@@ -5,7 +5,10 @@
      <small>
        <%= comment.user.name %> commented <%= time_ago_in_words(comment.created_at) %> ago
        <% if user_is_authorized_for_comment?(comment) %>
-         | <%= link_to "Delete", [@post, comment], method: :delete %>
+
+
+         | <%= link_to "Delete", [comment.post, comment], method: :delete %>
+
        <% end %>
      </small>
      <p><%= comment.body %></p>
@@ -14,5 +17,4 @@
  <% end %>
 
 
- <!-- At #21, we use content_tag to generate HTML, because the alternative,
- interpolating a comment's ID inside an HTML tag, is difficult to read: <div class="media" id="comment-<%= comment.id %>"> -->
+ 

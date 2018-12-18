@@ -39,7 +39,7 @@ resources :topics do
     post '/up-vote' => 'votes#up_vote', as: :up_vote
      post '/down-vote' => 'votes#down_vote', as: :down_vote
      resources :favorites, only: [:create, :destroy]
-     
+
 
   end
 
@@ -49,8 +49,9 @@ resources :topics do
 # names which will be associated with these routes: up_vote_path and  down_vote_path.
 
 
- resources :users, only: [:new, :create]
+ resources :users, only: [:new, :create, :show]
  post 'users/confirm' => 'users#confirm'
+
 resources :sessions, only: [:new, :create, :destroy]
 
  #At #34 we pass resources :posts to the resources :topics block.

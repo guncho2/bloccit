@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+
 RSpec.describe UsersController, type: :controller do
 
   # #1
@@ -72,6 +73,33 @@ RSpec.describe UsersController, type: :controller do
          end
 
 
+
+            describe "not signed in" do
+          # #1
+              let(:factory_user) { create(:user) }
+
+              before do
+                post :create, params: { user: new_user_attributes }
+              end
+
+          # #2
+              it "returns http success" do
+                get :show, params: { id: factory_user.id }
+                expect(response).to have_http_status(:success)
+              end
+
+              it "renders the #show view" do
+                get :show, params: { id: factory_user.id }
+                expect(response).to render_template :show
+              end
+
+              it "assigns factory_user to @user" do
+                get :show, params: { id: factory_user.id }
+                expect(assigns(:user)).to eq(factory_user)
+              end
+            end
+
+
 end
 
 
@@ -91,3 +119,9 @@ end
 # At #7, we test that we set user.password properly when creating a user.
 #
 # At #8, we test that we set user.password_confirmation properly when creating a user.
+
+
+# At #1, we build a variable named factory_user using create(:user).
+ # A factory in programming is an object that creates other types of objects on demand. Our factory create User objects. Because we use create and not build, our objects is persisted to the database.
+#
+# At #2 we write our standard tests for testing the show action.
