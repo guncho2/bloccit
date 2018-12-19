@@ -97,8 +97,12 @@ RSpec.describe User, type: :model do
    end
    #1
    describe "invalid user" do
-     let(:user_with_invalid_name) { User.new(name: "", email: "user@bloccit.com") }
-     let(:user_with_invalid_email) { User.new(name: "Bloccit User", email: "") }
+    #  let(:user_with_invalid_name) { User.new(name: "", email: "user@bloccit.com") }
+    #  let(:user_with_invalid_email) { User.new(name: "Bloccit User", email: "") }
+
+    let(:user_with_invalid_name) { build(:user, name: "") }
+     let(:user_with_invalid_email) { build(:user, email: "") }
+     
 
      it "should be an invalid user due to blank name" do
        expect(user_with_invalid_name).to_not be_valid
@@ -133,6 +137,19 @@ RSpec.describe User, type: :model do
           end
         end
 
+        describe ".avatar_url" do
+ # #6
+     let(:known_user) { create(:user, email: "blochead@bloc.io") }
+
+     it "returns the proper Gravatar url for a known email entity" do
+ # #7
+       expected_gravatar = "http://gravatar.com/avatar/bb6d1172212c180cfbdb7039129d7b03.png?s=48"
+ # #8
+       expect(known_user.avatar_url(48)).to eq(expected_gravatar)
+     end
+   end
+
+
    end
 
 
@@ -162,3 +179,15 @@ RSpec.describe User, type: :model do
 # At #2, we create a favorite for user and @post.
 #
 # At #3, we expect that favorite_for will return the favorite we created in the line before.
+
+
+# At #6, we build a user with FactoryGirl. We pass email: "blochead@bloc.io" to build,
+#  which overrides the email address that would be generated in the factory with
+#   "blochead@bloc.io". We are overriding the default email address with a known
+#   one so that we can test against a specific string that we know Gravatar will
+#    return for the account "blochead@bloc.io".
+#
+# At #7, we set the expected string that Gravatar should return for "blochead@bloc.io".
+#  The s=48 query paramter specifies that we want the returned image to be 48x48 pixels.
+#
+# At #8, we expect known_user.avatar_url to return http://gravatar.com/avatar/bb6d1172212c180cfbdb7039129d7b03.png?s=48.
