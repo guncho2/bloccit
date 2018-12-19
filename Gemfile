@@ -24,7 +24,7 @@ group :development, :test do
    gem 'rspec-rails', '~> 3.0'
    gem 'rails-controller-testing'
   gem 'shoulda'
-  gem 'factory_bot_rails', '~> 4.0'
+  gem 'factory_girl_rails', '~> 4.0'
 
  end
  #gems to the :development and :test groups because we want their tasks and generators to be available in both environments

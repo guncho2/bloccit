@@ -36,12 +36,22 @@ validates :password, presence: true, length: { minimum: 6 }, if: -> { password_d
        favorites.where(post_id: post.id).first
      end
 
+     def has_favorites?
+          favorites.count > 0
+        end
+
+        
 
         def avatar_url(size)
           gravatar_id = Digest::MD5::hexdigest(self.email).downcase
           "http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}"
         end
 
+# On the users show view, add a list of posts that the current user has favorited
+
+        def favorite_for_user(user)
+        	    favorites.where(user_id: user.id)
+        	  end
 
 
 def format_name

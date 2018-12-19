@@ -22,11 +22,41 @@
  </div>
 
  <!-- // #12 -->
+
+ <!--  Use the helper method to display a message instead of the <h2> if no
+ posts or comments exist. Something simple like "{user.name} has not submitted any posts yet." -->
+
+
+ <% if posts_or_comments_for_user?(@user) %>
+
  <h2>Posts</h2>
  <%= render @user.posts %>
 
  <h2>Comments</h2>
  <%= render @user.comments %>
+
+ <% else %>
+	  <div class="media-body">
+	    <%= @user.name %> has not submitted any posts yet.
+	  </div>
+	 <% end %>
+
+<!--  list of posts that the current user has favorited. Next to each favorited
+post, display the author's Gravatar, the number of votes, and the number of comments.-->
+
+   <h2>Favorites</h2>
+   <% if @user.has_favorites? %>
+       <% @user.favorites.each do |favorite| %>
+         <%= render partial: 'users/favorite', locals: { post: favorite.post } %>
+       <% end %>
+   <% else %>
+       <div class="media">
+         <%= link_to current_user.name, user_path(current_user) %> has not favorited any posts yet.
+       </div>
+   <% end %>
+
+
+
 
  <!-- At #10, we call avatar_url to fetch the current user's avatar.
 

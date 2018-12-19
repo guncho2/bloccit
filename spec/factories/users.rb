@@ -1,4 +1,4 @@
-FactoryBot.define do
+FactoryGirl.define do
    pw = RandomData.random_sentence
  # #3
    factory :user do
